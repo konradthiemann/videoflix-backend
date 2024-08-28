@@ -1,5 +1,6 @@
 import os
-import datetime
+from datetime import date
+from datetime import datetime
 import json
 from videoflix import settings
 from django.db import models
@@ -9,9 +10,7 @@ from import_export.widgets import JSONWidget
 class Video(models.Model):
     # created_at = models.DateTimeField(default=date.today)
     # created_at = models.DateTimeField(auto_now_add=True)
-    created_at = models.DateField(
-        default=datetime.date.today
-    )
+    created_at = models.DateField(default=date.today)
     title = models.CharField(max_length=100)
     description = models.TextField()
     video_file = models.FileField(upload_to='videos', null=True, blank=True)

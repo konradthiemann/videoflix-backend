@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_rq',
     'import_export',
+    'users',
 ]
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
