@@ -42,7 +42,12 @@ INSTALLED_APPS = [
     'content.apps.ContentConfig',
     'debug_toolbar',
     'django_rq',
+    'import_export',
 ]
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/staticfiles')
 
 CACHES = {
     'default': {
@@ -99,7 +104,8 @@ TEMPLATES = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
+BACKUP_ROOT = os.path.join(BASE_DIR, 'backup')
+BACKUP_URL = '/backup/'
 WSGI_APPLICATION = 'videoflix.wsgi.application'
 
 
