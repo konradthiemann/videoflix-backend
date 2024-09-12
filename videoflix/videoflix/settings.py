@@ -44,9 +44,13 @@ INSTALLED_APPS = [
     'django_rq',
     'import_export',
     'users',
+    'djoser',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
+    'rest_framework.authtoken',
 ]
 
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'users.User'
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
