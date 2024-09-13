@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+from datetime import timedelta
 import os
 from pathlib import Path
 
@@ -54,11 +55,54 @@ AUTH_USER_MODEL = 'users.User'
 
 # EMAIL CONFIG
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.gmx.net' # 'smtp.gmail.com' for gmail
-EMAIL_PORT = '995' # 587 for gmail
-EMAIL_HOST_USER = '' # your gmail email
-EMAIL_HOST_PASSWORD = '' # your gmail password
-EMAIL_USE_TLS = False # True for gmail
+EMAIL_HOST = 'smtp.gmail.com' # 'smtp.gmail.com' for gmail
+EMAIL_PORT = '587' # 587 for gmail
+EMAIL_HOST_USER = 'videoflix.kt@gmail.com' # your gmail email
+EMAIL_HOST_PASSWORD = 'videoflix123' # your gmail password
+EMAIL_USE_TLS = True # True for gmail
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    # 'DEFAULT_RENDERER_CLASSES': (
+    #     'rest_framework.renderers.JSONRenderer',
+    # ),
+}
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_TOKEN_CLASSES' : ('rest_framework_simplejwt.tokens.AccessToken',),
+}
+
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/?uid={uid}&token={token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/?uid={uid}&token={token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'ACTIVATION_URL': 'auth/activate/?uid={uid}&token={token}',
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+    'SERIALIZERS': {
+        'user_create': 'accounts.serializers.UserCreateSerializer', # custom serializer
+        # 'user': 'djoser.serializers.UserSerializer',
+        # 'current_user': 'djoser.serializers.UserSerializer',
+        # 'user_delete': 'djoser.serializers.UserSerializer', // .UserDeleteSerializer
+    },
+}
+
+DOMAIN = 'http://localhost:3000'
+SITE_NAME = 'Videoflix'
+
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
