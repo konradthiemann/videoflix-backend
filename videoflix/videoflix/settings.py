@@ -52,6 +52,14 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'users.User'
 
+# EMAIL CONFIG
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.gmx.net' # 'smtp.gmail.com' for gmail
+EMAIL_PORT = '995' # 587 for gmail
+EMAIL_HOST_USER = '' # your gmail email
+EMAIL_HOST_PASSWORD = '' # your gmail password
+EMAIL_USE_TLS = False # True for gmail
+
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/staticfiles')
