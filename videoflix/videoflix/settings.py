@@ -54,12 +54,15 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'users.User'
 
 # EMAIL CONFIG
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'users.email_backend.CustomEmailBackend'
 EMAIL_HOST = 'smtp.gmail.com' # 'smtp.gmail.com' for gmail
-EMAIL_PORT = '587' # 587 for gmail
+# EMAIL_PORT = '587' # 587 for gmail smtp
+EMAIL_PORT = 465 # 465 for gmail ssl
 EMAIL_HOST_USER = 'videoflix.kt@gmail.com' # your gmail email
-EMAIL_HOST_PASSWORD = 'videoflix123' # your gmail password
-EMAIL_USE_TLS = True # True for gmail
+# EMAIL_HOST_PASSWORD = 'zdck lzpm looy vefu' # your gmail password
+EMAIL_HOST_PASSWORD = 'zdcklzpmlooyvefu' # your gmail password
+# EMAIL_USE_TLS = True # True for gmail tls
+EMAIL_USE_SSL = True # True for gmail ssl
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
