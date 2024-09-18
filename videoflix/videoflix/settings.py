@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+from datetime import timedelta
 import os
 from pathlib import Path
 
@@ -21,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!v451gwq9cvoblv7)63^i(f(j7kk)ayp*d*3gd%z7&78ph=yi*'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,9 +45,67 @@ INSTALLED_APPS = [
     'django_rq',
     'import_export',
     'users',
+    'djoser',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
+    'rest_framework.authtoken',
 ]
 
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'users.User'
+
+# EMAIL CONFIG
+EMAIL_BACKEND = 'users.email_backend.CustomEmailBackend'
+EMAIL_HOST = 'smtp.gmail.com' # 'smtp.gmail.com' for gmail
+# EMAIL_PORT = '587' # 587 for gmail smtp
+EMAIL_PORT = 465 # 465 for gmail ssl
+EMAIL_HOST_USER = 'videoflix.kt@gmail.com' # your gmail email
+# EMAIL_HOST_PASSWORD = 'zdck lzpm looy vefu' # your gmail password
+EMAIL_HOST_PASSWORD = 'zdcklzpmlooyvefu' # your gmail password
+# EMAIL_USE_TLS = True # True for gmail tls
+EMAIL_USE_SSL = True # True for gmail ssl
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    # 'DEFAULT_RENDERER_CLASSES': (
+    #     'rest_framework.renderers.JSONRenderer',
+    # ),
+}
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_TOKEN_CLASSES' : ('rest_framework_simplejwt.tokens.AccessToken',),
+}
+
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/?uid={uid}&token={token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/?uid={uid}&token={token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'ACTIVATION_URL': 'auth/activate/?uid={uid}&token={token}',
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+    'SERIALIZERS': {
+        'user_create': 'accounts.serializers.UserCreateSerializer', # custom serializer
+        # 'user': 'djoser.serializers.UserSerializer',
+        # 'current_user': 'djoser.serializers.UserSerializer',
+        # 'user_delete': 'djoser.serializers.UserSerializer', // .UserDeleteSerializer
+    },
+}
+
+DOMAIN = 'http://localhost:3000'
+SITE_NAME = 'Videoflix'
+
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
@@ -122,11 +181,11 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'videoflix',
-        'USER': 'videoflixuser',
-        'PASSWORD': 'yourpassword',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
     }
 }
 
