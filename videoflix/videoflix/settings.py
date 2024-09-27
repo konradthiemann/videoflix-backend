@@ -6,7 +6,7 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 CACHE_TTL = 60 * 15
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework.authtoken',
+    'corsheaders',
 ]
 AUTH_USER_MODEL = 'users.User'
 EMAIL_BACKEND = 'users.email_backend.CustomEmailBackend'
@@ -56,13 +57,13 @@ DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/?uid={uid}&token={token}',
     'SEND_ACTIVATION_EMAIL': True,
     'USER_CREATE_PASSWORD_RETYPE': True,
-    'ACTIVATION_URL': 'auth/activate/?uid={uid}&token={token}',
+    'ACTIVATION_URL': 'activate/?uid={uid}&token={token}',
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
     'SERIALIZERS': {
         'user_create': 'accounts.serializers.UserCreateSerializer', # custom serializer
     },
 }
-DOMAIN = 'http://localhost:3000'
+DOMAIN = 'localhost:8080'
 SITE_NAME = 'Videoflix'
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/staticfiles')
@@ -81,10 +82,27 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8080',
+    'http://127.0.0.1',
+]
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_ALLOW_HEADERS = [
+    'authorization',
+    'content-type',
 ]
 RQ_QUEUES = {
     'default': {
