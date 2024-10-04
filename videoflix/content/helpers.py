@@ -1,4 +1,7 @@
+import random
+from django.core.files import File
 import os
+from .models import Video
 from .tasks import convert_360p ,convert_480p, convert_720p, convert_1080p
 
 def convert_video_files(video_file_path):

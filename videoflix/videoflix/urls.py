@@ -11,4 +11,5 @@ urlpatterns = [
     path('api/v1/', include('users.urls')),
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.jwt')),
+    path('api/v1/', include('content.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
