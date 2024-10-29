@@ -24,7 +24,7 @@ def stream_video(request, video_id, resolution):
 
     video_path = os.path.join(settings.MEDIA_ROOT, f"{video_id}_{resolution}.mp4")
     if not os.path.exists(video_path):
-        raise Http404("Video not found")
+        raise Http404("Video not found", video)
 
     def file_iterator(file_name, chunk_size=8192):
         with open(file_name, "rb") as f:

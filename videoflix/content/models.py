@@ -12,7 +12,9 @@ class Video(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     video_file = models.FileField(upload_to='videos')
-    thumbnail = models.ImageField(upload_to='thumbnails')  
+    thumbnail = models.ImageField(upload_to='thumbnails')
+    id = models.AutoField(primary_key=True)
+
     def __str__(self):
         return self.title
 

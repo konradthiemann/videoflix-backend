@@ -8,7 +8,7 @@ import django_rq
 def video_post_save(sender, instance, created, **kwargs):
      if created:
         queue = django_rq.get_queue('default', autocommit=True)
-        queue.enqueue(convert_video_files, instance.video_file.path)
+        queue.enqueue(convert_video_files, instance.video_file.path, instance.id)
 
 @receiver(post_delete, sender=Video)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
