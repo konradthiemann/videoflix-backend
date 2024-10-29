@@ -6,7 +6,7 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.2.137']
 CACHE_TTL = 60 * 15
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'import_export',
     'users',
     'djoser',
+    'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework.authtoken',
@@ -103,7 +104,12 @@ CORS_ALLOW_METHODS = [
 CORS_ALLOW_HEADERS = [
     'authorization',
     'content-type',
+    'accept',
+    'origin',
+    'x-csrftoken',
+    'x-requested-with',
 ]
+# CORS_ALLOW_CREDENTIALS = True // uncomment this line if you want to allow credentials
 RQ_QUEUES = {
     'default': {
         'HOST': 'localhost',

@@ -1,11 +1,14 @@
+import random
+from django.core.files import File
 import os
+# from .models import Video
 from .tasks import convert_360p ,convert_480p, convert_720p, convert_1080p
 
-def convert_video_files(video_file_path):
-    convert_360p(video_file_path)
-    convert_480p(video_file_path)
-    convert_720p(video_file_path)
-    convert_1080p(video_file_path)
+def convert_video_files(video_file_path, video_id):
+    convert_360p(video_file_path, video_id)
+    convert_480p(video_file_path, video_id)
+    convert_720p(video_file_path, video_id)
+    convert_1080p(video_file_path, video_id)
 
 def delete_file(file_path):
     if os.path.isfile(file_path):
